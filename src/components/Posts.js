@@ -3,13 +3,16 @@ import Post from './Post';
 
 export default function Posts() {
     const [ posts, setPosts ] = useState([]);
+    const [ error, setError ] = useState('');
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/posts')
         .then(response => response.json())
         .then(posts => setPosts(posts))
-        .catch((err) => console.log(err.message));
+        .catch((error) => setError(error.message));
     }, []);
+
+    if (error) return <h1>Error: {error}</h1>;
 
     return (
         <div>
